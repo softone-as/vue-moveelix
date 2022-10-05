@@ -10,7 +10,7 @@
       />
     </div>
     <div class="w-full xl:w-1/2 p-8">
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleLogin">
         <h1 class="text-2xl font-bold">Sign in to your account</h1>
         <div>
           <span class="text-gray-600 text-sm"> Don't have an account? </span>
@@ -72,14 +72,25 @@
 </template>
 
 <script setup lang="ts">
+import { mapAuthCodeToMessage } from "@/helper";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "../store/index";
 
-const email = ref<String>("");
-const password = ref<String>("");
+const store = useStore();
+const router = useRouter();
 
-function handleSubmit() {
-  console.log(email.value);
-  console.log(password.value);
+const email = ref("");
+const password = ref("");
+const error = ref("");
+
+async function handleLogin() {
+  try {
+    await store.signIn(email.value, password.value);
+    router.push("/");
+  } catch (err: any) {
+    error.value = mapAuthCodeToMessage(err.code);
+  }
 }
 </script>
 

@@ -51,7 +51,7 @@
           </li>
           <li>
             <RouterLink
-              to="/detail"
+              to="#"
               class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >About</RouterLink
             >
@@ -70,11 +70,11 @@
               >Pricing</RouterLink
             >
           </li>
-          <li>
-            <RouterLink
-              to="#"
+          <li v-if="store.users">
+            <Button
+              @click="handleLogout"
               class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Contact</RouterLink
+              >Logout</Button
             >
           </li>
         </ul>
@@ -84,7 +84,21 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { mapAuthCodeToMessage } from "@/helper";
+import { useStore } from "@/store";
+import { RouterLink, useRouter } from "vue-router";
+
+const store = useStore();
+const router = useRouter();
+
+async function handleLogout() {
+  try {
+    await store.logout();
+    router.push("/login");
+  } catch (error: any) {
+    console.log(mapAuthCodeToMessage(error.code));
+  }
+}
 </script>
 
 <style scoped></style>
