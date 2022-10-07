@@ -40,7 +40,7 @@ import MovieItem from "./MovieItem.vue";
 
 const props = defineProps({
   movies: { type: Array as PropType<MovieTypes[]>, required: true },
-  showAll: { type: Boolean },
+  showAll: { type: Boolean, default: false },
   pathMore: { type: String, default: "" },
 });
 </script>

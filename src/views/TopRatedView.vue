@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <MovieWrapper :movies="data" title="Top Rated Movies" showAll />
+    <MovieWrapper :movies="topRatedMovies" title="Top Rated Movies" showAll />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { useFetch } from "@/components/composable/useFetch";
 import MovieWrapper from "../components/movies/MovieWrapper.vue";
 
-const { data } = useFetch(
+const { data: topRatedMovies } = useFetch(
   `${import.meta.env.VITE_API_URL}/movie/top_rated?api_key=${
     import.meta.env.VITE_API_KEY
   }`

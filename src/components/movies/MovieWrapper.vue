@@ -19,7 +19,7 @@ import MovieList from "./MovieList.vue";
 const props = defineProps({
   movies: { type: Array as PropType<MovieTypes[]>, required: true },
   title: { type: String, required: true },
-  showAll: { type: Boolean, default: false },
+  showAll: Boolean,
   pathMore: { type: String, default: "" },
 });
 </script>

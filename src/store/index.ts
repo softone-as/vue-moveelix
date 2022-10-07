@@ -7,22 +7,24 @@ import {
   signOut,
 } from "@firebase/auth";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 export const useStore = defineStore("auth", () => {
   const users = ref({});
   const isLoading = ref(false);
 
-  const init = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      users.value = {
-        uid: user.uid,
-        email: user.email,
-      };
-    } else {
-      users.value = {};
-    }
-  });
+  watchEffect(
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        users.value = {
+          uid: user.uid,
+          email: user.email,
+        };
+      } else {
+        users.value = {};
+      }
+    })
+  );
 
   const signUp = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -41,5 +43,5 @@ export const useStore = defineStore("auth", () => {
     return signInWithPopup(auth, _provider);
   };
 
-  return { init, users, isLoading, signUp, signIn, logout, signInWithProvider };
+  return { users, isLoading, signUp, signIn, logout, signInWithProvider };
 });

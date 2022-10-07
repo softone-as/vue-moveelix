@@ -56,25 +56,18 @@
               >About</RouterLink
             >
           </li>
-          <li>
-            <RouterLink
-              to="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Services</RouterLink
-            >
-          </li>
-          <li>
-            <RouterLink
-              to="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Pricing</RouterLink
-            >
-          </li>
-          <li v-if="store.users">
-            <Button
+          <li v-if="store.users && Object.keys(store.users).length !== 0">
+            <a
               @click="handleLogout"
               class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Logout</Button
+              >Logout</a
+            >
+          </li>
+          <li v-else>
+            <a
+              @click="toLogin"
+              class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >Login</a
             >
           </li>
         </ul>
@@ -98,6 +91,10 @@ async function handleLogout() {
   } catch (error: any) {
     console.log(mapAuthCodeToMessage(error.code));
   }
+}
+
+function toLogin() {
+  router.push("/login");
 }
 </script>
 
